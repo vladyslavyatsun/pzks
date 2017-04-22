@@ -49,6 +49,10 @@ public class ModellingConnection {
     }
 
     public void setState1(State state1) {
+        if (state1 == State.FREE)
+        {
+            System.out.printf("free");
+        }
         this.state1 = state1;
     }
 
@@ -156,7 +160,7 @@ public class ModellingConnection {
         if (taskFrom_1 == null) {
             return false;
         }
-        return ((direction1 == direction & taskFrom_1.equals(fromTask) & taskTo_1.equals(toTask) & (connectedToProcessor != null && connectedToProcessor.equals(sendToProcessor))));
+        return ((direction1 == direction & (connectedToProcessor != null && connectedToProcessor.equals(sendToProcessor))));
 //        return ((direction1 == direction & taskFrom_1.equals(fromTask) & taskTo_1.equals(toTask) & connectedToProcessor.equals(sendToProcessor))) ||
 //                ((direction2 == direction & taskFrom_2.equals(fromTask) & taskTo_2.equals(toTask) & connectedToProcessor.equals(sendToProcessor)));
     }

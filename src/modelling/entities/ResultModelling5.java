@@ -24,6 +24,7 @@ public class ResultModelling5 extends ResultModelling {
         while (isNonCompletedTasks()) {
             ModellingTask readyTask;
             List<ModellingProcessor> freeProcessors;
+
             do {
                 isSomeActionOnCycle = false;
                 readyTask = defineReadyTask();//choose ready task

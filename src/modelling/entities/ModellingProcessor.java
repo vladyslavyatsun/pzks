@@ -102,6 +102,7 @@ public class ModellingProcessor {
                             (physicalLink.getState2() == ModellingConnection.State.BUSY &
                                     physicalLink.getDirection2() != direction
                                     & (physicalLink.getConnectedToProcessor() != null && physicalLink.getConnectedToProcessor().equals(connectToProcessor)))) {
+
                         return physicalLink.setDirection1(ModellingConnection.Direction.READY);
                     }
                 }
@@ -159,11 +160,11 @@ public class ModellingProcessor {
         //define link for send
 
         //todo check equal send link usage
-        for (ModellingConnection physicalLink : sendToProcessor.getPhysicalLinks()) {
-            if (physicalLink.getConnectedToProcessor() != null && physicalLink.getConnectedToProcessor().equals(this)) {
-                return false;
-            }
-        }
+//        for (ModellingConnection physicalLink : sendToProcessor.getPhysicalLinks()) {
+//            if (physicalLink.getConnectedToProcessor() != null && physicalLink.getConnectedToProcessor().equals(this)) {
+//                return false;
+//            }
+//        }
 
         ModellingConnection connection = getFreePhysicalLink(ModellingConnection.Direction.SEND, sendToProcessor);
         if (connection == null) return false;
