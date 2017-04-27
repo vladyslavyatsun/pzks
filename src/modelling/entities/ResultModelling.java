@@ -176,7 +176,7 @@ public abstract class ResultModelling {
                         //define duplex
                         if (SystemConnection.DUPLEX & modellingConnection.getTaskFrom_2() != null) {
 //                            if (modellingConnection.getDirection2() == ModellingConnection.Direction.SEND) {
-                            state += " / ";
+                            state += " & ";
 //                                state += "S:" + modellingConnection.getTaskFrom_2().getTask().getId() + "-" + modellingConnection.getTaskTo_2().getTask().getId();
 //                                state += "(" + modellingConnection.getConnectedToProcessor().getProcessor().getId() + ")";
 //                            } else {

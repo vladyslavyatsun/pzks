@@ -1,19 +1,20 @@
 package modelling.entities;
 
 import entities.computerSystem.ComputerSystem;
+import entities.task.Task;
 import entities.task.TaskGraph;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by vadim on 10.05.14.
  */
 public class ResultModelling2 extends ResultModelling {
 
+    private Map<ModellingTask, ModellingProcessor> taskToProcessor;
     public ResultModelling2(TaskGraph taskGraph, ComputerSystem computerSystem, int[] queue) {
         super(taskGraph, computerSystem, queue);
+        taskToProcessor = new HashMap<>();
     }
 
     @Override
@@ -27,7 +28,7 @@ public class ResultModelling2 extends ResultModelling {
             do {
                 isSomeActionOnCycle = false;
                 readyTask = defineReadyTask();//choose ready task
-                freeProcessor = defineFreeProcessor();//choose free processor
+                freeProcessor = defineFreeProcessor(readyTask);//choose free processor
                 if (readyTask != null && freeProcessor != null) {
                     if (freeProcessor.haveAllData(readyTask)) {
                         freeProcessor.setCurrentTask(readyTask);
@@ -90,7 +91,11 @@ public class ResultModelling2 extends ResultModelling {
     }
 
     //todo return random free processor
-    private ModellingProcessor defineFreeProcessor() {
+    private ModellingProcessor defineFreeProcessor(ModellingTask task) {
+        if (taskToProcessor.get(task) != null) {
+            return taskToProcessor.get(task);
+        }
+
         ModellingProcessor freeProcessor = null;
         ArrayList<ModellingProcessor> freeProcessors = new ArrayList<ModellingProcessor>();
         for (ModellingProcessor processor : processors) {
@@ -105,6 +110,7 @@ public class ResultModelling2 extends ResultModelling {
             freeProcessor = freeProcessors.get(index);
         }
 
+        taskToProcessor.put(task, freeProcessor);
         return freeProcessor;
     }
 

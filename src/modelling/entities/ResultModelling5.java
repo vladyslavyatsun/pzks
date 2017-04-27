@@ -12,12 +12,15 @@ import java.util.Map;
  * Created by vadim on 10.05.14.
  */
 public class ResultModelling5 extends ResultModelling {
+    private Map<ModellingTask, ModellingProcessor> taskToProcessor;
     public ResultModelling5(TaskGraph taskGraph, ComputerSystem computerSystem, int[] queue) {
         super(taskGraph, computerSystem, queue);
+        taskToProcessor = new HashMap<>();
     }
 
     @Override
     public void model() {
+
         initialStep();//step 0
         int step = 0;
         boolean isSomeActionOnCycle;
@@ -74,6 +77,9 @@ public class ResultModelling5 extends ResultModelling {
     }
 
     private ModellingProcessor defineProcessor(List<ModellingProcessor> freeProcessors, ModellingTask task) {
+        if (taskToProcessor.get(task) != null) {
+            return taskToProcessor.get(task);
+        }
         ModellingProcessor processor = null;
         if (freeProcessors.size() == 1) return freeProcessors.get(0);
         List<ModellingTask> dependsFrom = task.getDependsFrom();
@@ -111,11 +117,15 @@ public class ResultModelling5 extends ResultModelling {
 //            }
 //        }
         for (ModellingProcessor freeProcessor : freeProcessors) {
+            System.out.println(processorsWay.get(freeProcessor) + " " + freeProcessor.getProcessor().getId());
             if (processorsWay.get(freeProcessor) < minWay) {
                 minWay = processorsWay.get(freeProcessor);
                 processor = freeProcessor;
             }
         }
+        System.out.println("Min way " + minWay);
+
+        taskToProcessor.put(task, processor);
         return processor;
     }
 
